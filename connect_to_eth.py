@@ -1,7 +1,6 @@
 import json
 from web3 import Web3
 from web3.middleware import ExtraDataToPOAMiddleware
-from web3.middleware.geth_poa import geth_poa_middleware
 from web3.providers.rpc import HTTPProvider
 
 '''
@@ -34,7 +33,7 @@ def connect_with_middleware(contract_json):
     # The second section requires you to inject middleware into your w3 object and
     # create a contract object. Read more on the docs pages at https://web3py.readthedocs.io/en/stable/middleware.html
     # and https://web3py.readthedocs.io/en/stable/web3.contract.html
-    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+    w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 
     assert w3.is_connected(), f"Failed to connect to BNB Testnet at {bnb_url}"
     contract = w3.eth.contract(
